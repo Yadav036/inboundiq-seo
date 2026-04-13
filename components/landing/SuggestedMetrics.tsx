@@ -169,7 +169,7 @@ export function SuggestedMetrics({ className }: { className?: string }) {
     <div
       ref={ref}
       className={cn(
-        'mt-10 w-full max-w-full border border-[#303030] p-6 sm:p-7 md:mt-12 md:p-[30px] lg:mt-14',
+        'w-full max-w-full border border-[#303030] p-6 sm:p-7  md:p-[30px] ',
         'duration-700 ease-out motion-safe:transition-[opacity,transform]',
         inView
           ? 'translate-y-0 opacity-100'

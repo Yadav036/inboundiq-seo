@@ -2,6 +2,7 @@ import { ThemeProvider } from '@/context/theme';
 import type { Metadata } from 'next';
 
 import { SiteFooter } from '@/components/SiteFooter';
+import { SiteFrame } from '@/components/SiteFrame';
 import { SmoothScrollProvider } from '@/components/SmoothScrollProvider';
 
 import './globals.css';
@@ -26,8 +27,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SmoothScrollProvider>
-            {children}
-            <SiteFooter />
+            <SiteFrame>
+              {children}
+              <SiteFooter />
+            </SiteFrame>
           </SmoothScrollProvider>
         </ThemeProvider>
       </body>

@@ -118,15 +118,20 @@ export function LandingSections() {
               <span className='leading-[1.1]'> do you want this month?</span>
             </h2>
           </ScrollReveal>
-          <div className='mt-10 flex w-full flex-col items-stretch gap-8 md:mt-12 lg:mt-14 lg:flex-row lg:items-start lg:justify-between lg:gap-8 xl:gap-10'>
-            <div className='w-full lg:min-w-0 lg:flex-1 lg:max-w-[min(100%,820px)] xl:max-w-[880px]'>
+          <div
+            className={cn(
+              'mt-10 grid w-full grid-cols-1 items-start gap-8 md:mt-12 lg:mt-14',
+              'lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_340px] xl:gap-10',
+            )}
+          >
+            <div className='min-w-0'>
               <SuggestedMetrics className='mt-0' />
             </div>
             <ScrollReveal
               delayMs={150}
-              className='mx-auto w-full max-w-[300px] shrink-0 sm:max-w-[320px] lg:mx-0 lg:w-[min(100%,320px)]'
+              className='w-full max-w-[320px] justify-self-center lg:w-[320px] lg:max-w-none lg:justify-self-stretch xl:w-[340px]'
             >
-              <MonthlyLeadsSliderCard />
+              <MonthlyLeadsSliderCard className='w-full max-w-none' />
             </ScrollReveal>
           </div>
         </div>

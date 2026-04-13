@@ -18,7 +18,9 @@ export function MonthlyLeadsSliderCard({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'flex min-h-[260px] w-full max-w-[320px] flex-col justify-between gap-8 bg-[var(--Neutral-100,#171717)] p-5',
+        'flex min-h-[260px] w-full flex-col justify-between gap-8',
+        'border border-[#303030] bg-[var(--Neutral-100,#171717)]',
+        'p-6 sm:p-7 md:p-[30px]',
         className,
       )}
       data-node-id='644:1877'
