@@ -48,7 +48,7 @@ export function SiteFooter({ className }: { className?: string }) {
         className,
       )}
     >
-      <div className='mx-auto w-full max-w-[1320px] px-4 pb-10 pt-16 md:pb-12 md:pt-20'>
+      <div className='mx-auto w-full max-w-[1320px] px-[76px] pb-10 pt-16 md:pb-12 md:pt-20'>
         <div className='flex flex-col gap-12 lg:flex-row lg:justify-between lg:gap-16'>
           <div className='max-w-[248px] shrink-0'>
             <Link href='/' className='inline-block' aria-label='InboundIQ home'>

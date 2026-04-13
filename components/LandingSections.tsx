@@ -38,7 +38,7 @@ function SectionShell({
         className,
       )}
     >
-      <div className='mx-auto w-full max-w-[1320px] px-4'>{children}</div>
+      <div className='mx-auto w-full max-w-[1320px] px-0'>{children}</div>
     </section>
   )
 }

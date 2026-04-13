@@ -15,10 +15,10 @@ export default function PricingPage() {
   return (
     <div className='min-h-screen bg-black text-white'>
       <SiteNavbar />
-      <main>
+      <main className='px-[76px]'>
         <PricingPageHeader />
         <section
-          className='mx-auto w-full max-w-[1320px] px-4 pb-16 pt-8 md:pb-20 md:pt-10'
+          className='mx-auto w-full max-w-[1320px] px-0 pb-16 pt-8 md:pb-20 md:pt-10'
           aria-label='Pricing plans'
         >
           <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-8'>
@@ -56,7 +56,7 @@ export default function PricingPage() {
         <SeeYourFirstLeadsCta />
 
         <section
-          className='mx-auto w-full max-w-[1320px] px-4 pb-20 pt-16 md:pb-28 md:pt-20'
+          className='mx-auto w-full max-w-[1320px] px-0 pb-20 pt-16 md:pb-28 md:pt-20'
           aria-labelledby='heading-pricing-common-questions'
         >
           <CommonQuestionsSection

@@ -1,18 +1,15 @@
 import type { ReactNode } from 'react'
 
 /**
- * Global shell: fixed 60px left rail + border (wireframe gutter).
- * Content uses `pl-[60px]` so the rail stays pinned to the viewport while scrolling.
- * Mobile menu panels use `left-[60px]` so the rail stays visible there too.
+ * Global shell: two vertical frame lines at 60px from each edge (#252525).
+ * Content uses horizontal inset via `px-[76px]` on header / main / footer (60px rail + 16px).
  */
 export function SiteFrame({ children }: { children: ReactNode }) {
   return (
-    <div className='relative min-h-screen w-full bg-black text-white'>
-      <div
-        className='pointer-events-none fixed left-0 top-0 z-[40] h-full w-[60px] border-r border-[#262626] bg-black'
-        aria-hidden
-      />
-      <div className='flex min-h-screen min-w-0 flex-col pl-[60px]'>{children}</div>
+    <div className='page-wrap min-h-screen w-full bg-black text-white'>
+      <div className='frame-left' aria-hidden />
+      <div className='frame-right' aria-hidden />
+      <div className='relative z-0 flex min-h-screen min-w-0 flex-col'>{children}</div>
     </div>
   )
 }

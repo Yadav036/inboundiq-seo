@@ -37,11 +37,11 @@ export function SiteNavbar() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full border-b border-white/[0.06]',
+        'sticky top-0 z-50 w-full border-b border-[#252525]',
         'bg-black/80 backdrop-blur-[12px] supports-[backdrop-filter]:bg-black/60',
       )}
     >
-      <div className='mx-auto flex max-w-[1320px] items-center justify-between gap-6 px-2.5 py-4 sm:px-4'>
+      <div className='mx-auto flex w-full max-w-[1320px] items-center justify-between gap-6 px-[20px] py-4'>
         <Link href='/' className='shrink-0' aria-label='InboundIQ home'>
           <Logo width={129} height={25} />
         </Link>
@@ -88,7 +88,7 @@ export function SiteNavbar() {
 
         <button
           type='button'
-          className='inline-flex items-center justify-center rounded border border-[#262626] p-2 text-white md:hidden'
+          className='inline-flex items-center justify-center rounded border border-[#252525] p-2 text-white md:hidden'
           onClick={() => setMobileOpen(true)}
           aria-expanded={mobileOpen}
           aria-controls='mobile-primary-nav'
@@ -102,12 +102,12 @@ export function SiteNavbar() {
         <>
           <div
             id='mobile-primary-nav'
-            className='fixed inset-y-0 left-[60px] right-0 z-[60] flex flex-col border-l border-[#262626] bg-black p-6 md:hidden'
+            className='fixed inset-y-0 left-[60px] right-0 z-[60] flex flex-col border-l border-[#252525] bg-black p-6 md:hidden'
           >
             <div className='flex justify-end'>
               <button
                 type='button'
-                className='inline-flex items-center justify-center rounded border border-[#262626] p-2 text-white'
+                className='inline-flex items-center justify-center rounded border border-[#252525] p-2 text-white'
                 onClick={() => setMobileOpen(false)}
                 aria-label='Close menu'
               >
