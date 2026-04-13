@@ -7,31 +7,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Decorative page frame — vertical rails + header rule (#252525) */
+/* Decorative page frame — vertical rails drawn by SiteFrameLines (solid / dashed) */
 @layer components {
   .page-wrap {
     position: relative;
     /* x-only: full overflow:hidden breaks position:sticky on the header */
     overflow-x: hidden;
-  }
-
-  .frame-left,
-  .frame-right {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: #252525;
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .frame-left {
-    left: 60px;
-  }
-
-  .frame-right {
-    right: 60px;
   }
 }
 

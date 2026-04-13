@@ -36,6 +36,7 @@ export function SiteNavbar() {
 
   return (
     <header
+      data-site-header
       className={cn(
         'sticky top-0 z-50 w-full border-b border-[#252525]',
         'bg-black/80 backdrop-blur-[12px] supports-[backdrop-filter]:bg-black/60',

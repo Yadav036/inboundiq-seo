@@ -5,7 +5,10 @@ const HERO_VECTOR_BG = '/hero-vector-bg.png'
 
 export function HeroSection() {
   return (
-    <section className='relative isolate flex w-full min-h-[min(100svh,920px)] flex-col overflow-hidden'>
+    <section
+      data-site-hero
+      className='relative isolate flex w-full min-h-[min(100svh,920px)] flex-col overflow-hidden'
+    >
 
       {/* ── Layer 0: Vector base ───────────────────────────── */}
       <div className='pointer-events-none absolute inset-0 z-0 overflow-hidden' aria-hidden>

@@ -21,35 +21,41 @@ export default function PricingPage() {
           className='mx-auto w-full max-w-[1320px] px-0 pb-16 pt-8 md:pb-20 md:pt-10'
           aria-label='Pricing plans'
         >
-          <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-8'>
-            <PricingCard
-              title='Pay As You Go'
-              description='Perfect for testing or occasional lead generation'
-              price='$99'
-              period='/per qualified lead'
-            />
+          <div className='flex max-w-full justify-center overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
+            <div className='flex flex-col divide-y divide-[#303030] border border-[#303030] lg:flex-row lg:divide-x lg:divide-y-0'>
+              <PricingCard
+                title='Pay As You Go'
+                description='Perfect for testing or occasional lead generation'
+                price='$99'
+                period='/per qualified lead'
+                className='border-0'
+              />
 
-            <PricingCard
-              title='Starter'
-              description='Best for small teams starting outbound without risk'
-              price='$299'
-              period='/per month'
-            />
+              <PricingCard
+                title='Starter'
+                description='Best for small teams starting outbound without risk'
+                price='$299'
+                period='/per month'
+                className='border-0'
+              />
 
-            <PricingCard
-              title='Growth'
-              description='Ideal for scaling companies wanting predictable results'
-              price='$499'
-              period='/per month'
-              ctaLabel='Continue'
-            />
+              <PricingCard
+                title='Growth'
+                description='Ideal for scaling companies wanting predictable results'
+                price='$499'
+                period='/per month'
+                ctaLabel='Continue'
+                className='border-0'
+              />
 
-            <PricingCard
-              title='Pro'
-              description='Built for aggressive growth and high-volume lead generation'
-              price='$999'
-              period='/per month'
-            />
+              <PricingCard
+                title='Pro'
+                description='Built for aggressive growth and high-volume lead generation'
+                price='$999'
+                period='/per month'
+                className='border-0'
+              />
+            </div>
           </div>
         </section>
 

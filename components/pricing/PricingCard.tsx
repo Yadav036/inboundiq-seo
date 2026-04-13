@@ -30,7 +30,7 @@ export function PricingCard({
   return (
     <article
       className={cn(
-        'group relative flex h-[300px] max-h-[300px] min-h-0 flex-col overflow-hidden border border-[#303030] bg-black',
+        'group relative flex h-[268px] max-h-[268px] min-h-0 w-[300px] max-w-[300px] shrink-0 flex-col overflow-hidden border border-[#303030] bg-black',
         className,
       )}
     >
