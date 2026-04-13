@@ -76,7 +76,7 @@ export function LandingSections() {
       {/* 619:614, 619:618, 654:3029, 654:3033, 654:3037 — feature grid */}
       <SectionShell id='built-b2b' labelledBy='heading-b2b'>
         <ScrollReveal delayMs={80}>
-          <div className='flex flex-col pt-16 pb-12 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20'>
+          <div className='flex flex-col pt-16 pb-4 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20'>
             <h2
               id='heading-b2b'
               className={cn(displayHeading, 'max-w-[20ch] text-left')}
@@ -85,13 +85,7 @@ export function LandingSections() {
               <br />
               business
             </h2>
-            <div className='mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-5'>
-              {B2B_FEATURES.map(({ title, description }, i) => (
-                <ScrollReveal key={title} delayMs={i * 48}>
-                  <FeatureCard title={title}>{description}</FeatureCard>
-                </ScrollReveal>
-              ))}
-            </div>
+     
 
             {/* 578:8289 + 578:8340 — industry selector + detail */}
             <IndustryShowcase />

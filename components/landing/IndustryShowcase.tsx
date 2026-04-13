@@ -14,7 +14,7 @@ export function IndustryShowcase() {
   const active = INDUSTRIES.find((i) => i.id === activeId) ?? INDUSTRIES[0]
 
   return (
-    <OutlineContentCard className='mt-14 lg:mt-20'>
+    <OutlineContentCard className='mt-14 lg:mt-4'>
       {/* 578:8289 + 578:8340 — selector + detail (nested “nodes” styles) */}
       <div className='flex w-full flex-col gap-8 lg:flex-row lg:gap-12 lg:items-start'>
         <nav
