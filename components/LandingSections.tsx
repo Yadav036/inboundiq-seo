@@ -9,6 +9,7 @@ import { MonthlyLeadsSliderCard } from '@/components/landing/MonthlyLeadsSliderC
 import { SuggestedMetrics } from '@/components/landing/SuggestedMetrics'
 import { WebsiteInLeadsOut } from '@/components/landing/WebsiteInLeadsOut'
 import { CommonQuestionsSection } from '@/components/landing/CommonQuestionsSection'
+import { CompareSectionStats } from '@/components/landing/CompareSectionStats'
 import { CompareTable } from '@/components/landing/CompareTable'
 import { ScrollReveal } from '@/components/landing/ScrollReveal'
 import { cn } from '@/lib/utils'
@@ -153,6 +154,7 @@ export function LandingSections() {
               <br />
               compare?
             </h2>
+            <CompareSectionStats className='mt-8 md:mt-10 lg:mt-12' />
             <CompareTable className='mt-10 md:mt-12 lg:mt-14' />
           </div>
         </ScrollReveal>

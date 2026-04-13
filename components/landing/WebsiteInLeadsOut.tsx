@@ -252,7 +252,7 @@ export function WebsiteInLeadsOut() {
         </nav>
       </div>
 
-      <div className='flex flex-col gap-12 md:gap-14'>
+      <div className='flex min-w-0 flex-col gap-12 md:gap-14'>
         {WEBSITE_IN_LEADS_STEPS.map((step, index) => (
           <article
             key={step.badge}
@@ -260,7 +260,8 @@ export function WebsiteInLeadsOut() {
             className={cn(
               STEP_CARD,
               'flex flex-col overflow-hidden border border-[#303030] md:min-h-[389px] md:flex-row',
-              'scroll-mt-6 md:scroll-mt-10',
+              /* Scale from the right so the active “zoom” does not bleed past the frame line */
+              'scroll-mt-6 md:scroll-mt-10 md:origin-right',
               'transition-[box-shadow,transform,opacity] duration-700 ease-out motion-reduce:transition-none',
               revealed[index]
                 ? 'translate-y-0 opacity-100'

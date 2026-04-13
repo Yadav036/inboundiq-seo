@@ -15,7 +15,7 @@ export default function PricingPage() {
   return (
     <div className='min-h-screen bg-black text-white'>
       <SiteNavbar />
-      <main className='px-[76px]'>
+      <main className='px-[60px]'>
         <PricingPageHeader />
         <section
           className='mx-auto w-full max-w-[1320px] px-0 pb-16 pt-8 md:pb-20 md:pt-10'

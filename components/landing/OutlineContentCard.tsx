@@ -17,7 +17,7 @@ export function OutlineContentCard({
   return (
     <div
       className={cn(
-        'flex w-full flex-col items-start gap-2.5 border border-white bg-black px-[19px] py-5 text-left',
+        'flex w-full flex-col items-start gap-2.5 py-5 text-left',
         className,
       )}
     >

@@ -4,7 +4,7 @@ import { SiteFrameLines } from '@/components/SiteFrameLines'
 
 /**
  * Global shell: vertical frame (solid over hero, dashed elsewhere — see SiteFrameLines).
- * Content uses horizontal inset via `px-[76px]` on header / main / footer (60px rail + 16px).
+ * Content uses horizontal inset via `px-[60px]` on header / main / footer so it stays inside the frame lines.
  */
 export function SiteFrame({ children }: { children: ReactNode }) {
   return (

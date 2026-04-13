@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className='min-h-screen bg-black text-white'>
       <SiteNavbar />
-      <main className='px-[76px]'>
+      <main className='px-[60px]'>
         <HeroSection />
         <LandingSections />
       </main>

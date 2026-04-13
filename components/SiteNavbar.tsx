@@ -42,7 +42,7 @@ export function SiteNavbar() {
         'bg-black/80 backdrop-blur-[12px] supports-[backdrop-filter]:bg-black/60',
       )}
     >
-      <div className='mx-auto flex w-full max-w-[1320px] items-center justify-between gap-6 px-[20px] py-4'>
+      <div className='mx-auto flex w-full max-w-[1320px] items-center justify-between gap-6 px-[60px] py-4'>
         <Link href='/' className='shrink-0' aria-label='InboundIQ home'>
           <Logo width={129} height={25} />
         </Link>

@@ -16,7 +16,7 @@ export function IndustryShowcase() {
   return (
     <OutlineContentCard className='mt-14 lg:mt-4'>
       {/* 578:8289 + 578:8340 — selector + detail (nested “nodes” styles) */}
-      <div className='flex w-full flex-col gap-8 lg:flex-row lg:gap-12 lg:items-start'>
+      <div className='flex w-full flex-col gap-8 lg:flex-row  lg:items-start'>
         <nav
           className='flex w-full shrink-0 flex-col gap-2 lg:w-[min(100%,280px)]'
           aria-label='Industries'
