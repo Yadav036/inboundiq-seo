@@ -58,7 +58,7 @@ const ROWS: { label: string; google: Cell; sdr: Cell; inbound: Cell }[] = [
 function CellContent({ cell }: { cell: Cell }) {
   if (cell.type === 'check') {
     return (
-      <span className='inline-flex items-center justify-center text-[color:var(--Primary-500,#b7f601)]'>
+      <span className='inline-flex items-center justify-start text-[color:var(--Primary-500,#b7f601)]'>
         <Check className='size-5' strokeWidth={2.25} aria-hidden />
         <span className='sr-only'>Yes</span>
       </span>
@@ -66,7 +66,7 @@ function CellContent({ cell }: { cell: Cell }) {
   }
   if (cell.type === 'x') {
     return (
-      <span className='inline-flex items-center justify-center text-red-500'>
+      <span className='inline-flex items-center justify-start text-red-500'>
         <X className='size-5' strokeWidth={2} aria-hidden />
         <span className='sr-only'>No</span>
       </span>
@@ -101,7 +101,7 @@ export function CompareTable({ className }: { className?: string }) {
         className,
       )}
     >
-      <table className='w-full min-w-[720px] border-collapse text-center'>
+      <table className='w-full min-w-[720px] border-collapse text-left'>
         <colgroup>
           <col className='w-[min(28%,220px)]' />
           <col />
@@ -118,7 +118,7 @@ export function CompareTable({ className }: { className?: string }) {
               scope='col'
               className='border-b border-dashed border-[#303030] px-3 pb-6 pt-4 align-bottom'
             >
-              <div className='flex flex-col items-center gap-1.5'>
+              <div className='flex flex-col items-start gap-1.5 text-left'>
                 <span className='font-sans text-sm font-normal leading-tight text-white'>
                   Google / Meta Ads
                 </span>
@@ -131,7 +131,7 @@ export function CompareTable({ className }: { className?: string }) {
               scope='col'
               className='border-b border-dashed border-[#303030] px-3 pb-6 pt-4 align-bottom'
             >
-              <div className='flex flex-col items-center gap-1.5'>
+              <div className='flex flex-col items-start gap-1.5 text-left'>
                 <span className='font-sans text-sm font-normal leading-tight text-white'>
                   Hiring an SDR
                 </span>
@@ -144,8 +144,8 @@ export function CompareTable({ className }: { className?: string }) {
               scope='col'
               className='border-b border-dashed border-[#303030] border-l border-[#303030] bg-[color:var(--Neutral-100,#171717)] px-4 pb-6 pt-4 align-bottom'
             >
-              <div className='flex flex-col items-center gap-2'>
-                <div className='flex justify-center'>
+              <div className='flex flex-col items-start gap-2 text-left'>
+                <div className='flex justify-start'>
                   <Logo />
                 </div>
                 <span className='max-w-[14rem] font-sans text-xs font-normal leading-[1.35] text-[color:var(--Neutral-500,#737373)]'>
@@ -164,23 +164,23 @@ export function CompareTable({ className }: { className?: string }) {
               >
                 {row.label}
               </th>
-              <td className='border-b border-dashed border-[#303030] px-3 py-4'>
+              <td className='border-b border-dashed border-[#303030] px-3 py-4 text-left'>
                 <CellContent cell={row.google} />
               </td>
-              <td className='border-b border-dashed border-[#303030] px-3 py-4'>
+              <td className='border-b border-dashed border-[#303030] px-3 py-4 text-left'>
                 <CellContent cell={row.sdr} />
               </td>
-              <td className='border-b border-dashed border-[#303030] border-l border-[#303030] bg-[color:var(--Neutral-100,#171717)] px-4 py-4'>
+              <td className='border-b border-dashed border-[#303030] border-l border-[#303030] bg-[color:var(--Neutral-100,#171717)] px-4 py-4 text-left'>
                 <CellContent cell={row.inbound} />
               </td>
             </tr>
           ))}
           <tr>
             <td className='p-0' colSpan={3} />
-            <td className='border-l border-[#303030] bg-[color:var(--Neutral-100,#171717)] px-4 pb-1 pt-6'>
+            <td className='border-l border-[#303030] bg-[color:var(--Neutral-100,#171717)] px-4 pb-1 pt-6 text-left'>
               <Link
                 href='/demo'
-                className='flex w-full items-center justify-center gap-1 bg-white px-4 py-3 font-mono text-sm font-normal leading-[1.4] tracking-[-0.02em] text-black transition-opacity hover:opacity-90'
+                className='inline-flex w-full items-center justify-start gap-1 bg-white px-4 py-3 font-mono text-sm font-normal leading-[1.4] tracking-[-0.02em] text-black transition-opacity hover:opacity-90'
               >
                 TRY INBOUNDIQ
                 <ChevronRight className='size-4 shrink-0' strokeWidth={2} aria-hidden />
