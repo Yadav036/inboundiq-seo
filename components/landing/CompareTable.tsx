@@ -177,10 +177,10 @@ export function CompareTable({ className }: { className?: string }) {
           ))}
           <tr>
             <td className='p-0' colSpan={3} />
-            <td className='border-l border-[#303030] bg-[color:var(--Neutral-100,#171717)] px-4 pb-1 pt-6 text-left'>
+            <td className='border-l border-[#303030] bg-[color:var(--Neutral-100,#171717)] px-4 pb-1 pt-6 text-center'>
               <Link
                 href='/demo'
-                className='inline-flex w-full items-center justify-start gap-1 bg-white px-4 py-3 font-mono text-sm font-normal leading-[1.4] tracking-[-0.02em] text-black transition-opacity hover:opacity-90'
+                className='inline-flex w-full items-center justify-center gap-1 bg-white px-4 py-3 font-mono text-sm font-normal leading-[1.4] tracking-[-0.02em] text-black transition-opacity hover:opacity-90'
               >
                 TRY INBOUNDIQ
                 <ChevronRight className='size-4 shrink-0' strokeWidth={2} aria-hidden />
