@@ -1,12 +1,17 @@
 'use client'
 
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import { Check, CircleHelp, X } from 'lucide-react'
 
 import { useCountUp } from '@/hooks/useCountUp'
 import { useInViewOnce } from '@/hooks/useInViewOnce'
 import { APP_GET_STARTED_URL } from '@/lib/appUrls'
+import {
+  computeLeadPricingMetrics,
+  AVG_REVENUE_PER_LEAD,
+} from '@/lib/leadPricingMetrics'
 import { cn } from '@/lib/utils'
 
 /** Figma 644:1943 — “Suggested Metrics” block (pricing / leads section) */
@@ -163,7 +168,19 @@ function PanelReveal({
   )
 }
 
-/** Exported so LandingSections can render it inline below the heading */
+const countsAsQualified = [
+  'Asking for more details',
+  'Requesting a call or demo',
+  'Responding positively to your value offer',
+]
+
+const doesNotCount = [
+  { strong: 'Auto-replies', text: ' "I’m out of the office until..."' },
+  { strong: 'Not interested', text: ' "Thanks but not for us right now"' },
+  { strong: 'Bounces / spam', text: ' Undeliverable or filtered' },
+]
+
+/** Overlay — no layout space; dims page behind; dismiss on scroll or backdrop tap */
 export function QualifiedCriteriaPanel({
   open,
   onClose,
@@ -171,43 +188,47 @@ export function QualifiedCriteriaPanel({
   open: boolean
   onClose: () => void
 }) {
-  const countsAsQualified = [
-    'Asking for more details',
-    'Requesting a call or demo',
-    'Responding positively to your value offer',
-  ]
+  const [mounted, setMounted] = useState(false)
 
-  const doesNotCount = [
-    { strong: 'Auto-replies', text: ' "I’m out of the office until..."' },
-    { strong: 'Not interested', text: ' "Thanks but not for us right now"' },
-    { strong: 'Bounces / spam', text: ' Undeliverable or filtered' },
-  ]
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
-  return (
+  useEffect(() => {
+    if (!open) return
+    function onScroll() {
+      onClose()
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [open, onClose])
+
+  if (!mounted || !open) return null
+
+  return createPortal(
     <div
-      className={cn(
-        'overflow-hidden transition-[max-height,opacity] duration-300 ease-out',
-        open ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0',
-      )}
+      className='fixed inset-0 z-[90] flex items-center justify-center p-4 sm:p-6'
+      role='dialog'
+      aria-modal='true'
+      aria-labelledby='qualified-criteria-title'
     >
-      <div className='mt-6 max-w-[680px] mx-auto border border-[#303030] bg-[#171717] p-5'>
-        <div className='flex items-start gap-2'>
-          <div className='flex-1 space-y-1.5'>
-            <p className='font-sans text-base font-normal leading-[1.2] tracking-[-0.02em] text-white'>
-              What counts as Qualified
-            </p>
-            <p className='font-sans text-xs font-normal leading-[1.4] text-[color:var(--Neutral-500,#737373)]'>
-              A real human reply that shows clear interest in your offer.
-            </p>
-          </div>
-          <button
-            type='button'
-            onClick={onClose}
-            className='inline-flex items-center justify-center text-[color:var(--Neutral-500,#737373)] transition-colors hover:text-white'
-            aria-label='Close qualified criteria'
+      <button
+        type='button'
+        className='absolute inset-0 bg-black/70 motion-safe:transition-opacity'
+        aria-label='Dismiss qualified criteria'
+        onClick={onClose}
+      />
+      <div className='relative z-10 max-h-[min(90dvh,640px)] w-full max-w-[680px] overflow-y-auto border border-[#303030] bg-[#171717] p-5 shadow-2xl'>
+        <div className='space-y-1.5'>
+          <p
+            id='qualified-criteria-title'
+            className='font-sans text-base font-normal leading-[1.2] tracking-[-0.02em] text-white'
           >
-            <X className='size-4' strokeWidth={1.8} aria-hidden />
-          </button>
+            What counts as Qualified
+          </p>
+          <p className='font-sans text-xs font-normal leading-[1.4] text-[color:var(--Neutral-500,#737373)]'>
+            A real human reply that shows clear interest in your offer.
+          </p>
         </div>
 
         <div className='mt-5 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6'>
@@ -249,20 +270,27 @@ export function QualifiedCriteriaPanel({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 
 export function SuggestedMetrics({
   className,
+  monthlyLeads,
   qualifiedModalOpen,
   onQualifiedModalOpenChange,
 }: {
   className?: string
+  monthlyLeads: number
   qualifiedModalOpen?: boolean
   onQualifiedModalOpenChange?: (open: boolean) => void
 }) {
   const { ref, inView } = useInViewOnce()
+  const metrics = useMemo(
+    () => computeLeadPricingMetrics(monthlyLeads),
+    [monthlyLeads],
+  )
   const [internalQualifiedModalOpen, setInternalQualifiedModalOpen] = useState(false)
   const isQualifiedModalOpen =
     qualifiedModalOpen ?? internalQualifiedModalOpen
@@ -311,7 +339,10 @@ export function SuggestedMetrics({
           </div>
         </PanelReveal>
 
-        <div className='grid grid-cols-1 gap-2.5 sm:grid-cols-3'>
+        <div
+          key={`metrics-${monthlyLeads}`}
+          className='grid grid-cols-1 gap-2.5 sm:grid-cols-3'
+        >
           <MetricTile
             label='Est. Cost'
             visible={inView}
@@ -320,7 +351,7 @@ export function SuggestedMetrics({
             <div className='flex flex-wrap items-baseline gap-x-2 gap-y-0'>
               <CountMoney
                 active={inView}
-                end={499}
+                end={metrics.estimatedMonthlyCost}
                 className='font-sans text-[40px] font-medium leading-[1.2] text-white'
               />
               <span className='font-sans text-xs font-normal leading-[18px] text-[color:var(--Neutral-500,#737373)]'>
@@ -336,7 +367,7 @@ export function SuggestedMetrics({
             <div className='flex flex-wrap items-baseline gap-x-2 gap-y-0'>
               <CountMoney
                 active={inView}
-                end={62}
+                end={metrics.costPerLead}
                 className='font-sans text-[40px] font-medium leading-[1.2] text-white'
               />
               <span className='font-sans text-xs font-normal leading-[18px] text-[color:var(--Neutral-500,#737373)]'>
@@ -352,8 +383,8 @@ export function SuggestedMetrics({
           >
             <CountDayRange
               active={inView}
-              min={5}
-              max={10}
+              min={metrics.timelineMin}
+              max={metrics.timelineMax}
               className='font-sans text-[40px] font-medium leading-[1.2] text-white'
             />
           </MetricTile>
@@ -375,63 +406,91 @@ export function SuggestedMetrics({
                 </Link>
               </div>
               <p className='mt-2 font-sans text-[40px] font-medium leading-[1.2] text-white'>
-                Growth Plan
+                {metrics.planDisplayName}
               </p>
               <div className='mt-4 flex max-w-[23rem] flex-col gap-2 font-sans text-xs font-normal leading-[18px] text-[color:var(--Neutral-500,#737373)]'>
-                <p>
-                  Best for scaling companies wanting predictable monthly results.{' '}
-                  <br className='hidden sm:block' />
-                  Includes -
-                </p>
-                <ul className='list-disc space-y-0 pl-[1.125rem] marker:text-[color:var(--Neutral-500,#737373)]'>
-                  <li>
-                    Includes{' '}
-                    <span className='text-white'>
-                      <CountInteger
-                        active={inView}
-                        end={8}
-                        className='text-white'
-                      />{' '}
-                      qualified leads
-                    </span>
-                    <button
-                      type='button'
-                      onClick={() => setQualifiedModalOpen(true)}
-                      className='ms-1 inline-flex align-middle text-[color:var(--Neutral-500,#737373)] transition-colors hover:text-white'
-                      aria-label='What counts as qualified leads'
-                    >
-                      <CircleHelp className='size-[14px]' strokeWidth={1.75} aria-hidden data-node-id='644:1938' />
-                    </button>
-                  </li>
-                  <li>
-                    Additional leads:{' '}
-                    <span className='text-white'>
-                      <CountMoney active={inView} end={69} className='text-white' />{' '}
-                      /lead
-                    </span>
-                  </li>
-                </ul>
+                {metrics.planKey === 'payg' ? (
+                  <>
+                    <p>{metrics.planBlurb}</p>
+                    <ul className='list-disc space-y-0 pl-[1.125rem] marker:text-[color:var(--Neutral-500,#737373)]'>
+                      <li>No monthly commitment</li>
+                      <li>
+                        <span className='text-white'>
+                          <CountMoney
+                            active={inView}
+                            end={metrics.estimatedMonthlyCost}
+                            className='text-white'
+                          />{' '}
+                          per qualified lead
+                        </span>
+                      </li>
+                    </ul>
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      {metrics.planBlurb}{' '}
+                      <br className='hidden sm:block' />
+                      Includes -
+                    </p>
+                    <ul className='list-disc space-y-0 pl-[1.125rem] marker:text-[color:var(--Neutral-500,#737373)]'>
+                      <li>
+                        Includes{' '}
+                        <span className='text-white'>
+                          <CountInteger
+                            active={inView}
+                            end={metrics.includedLeads}
+                            className='text-white'
+                          />{' '}
+                          qualified leads
+                        </span>
+                        <button
+                          type='button'
+                          onClick={() => setQualifiedModalOpen(true)}
+                          className='ms-1 inline-flex align-middle text-[color:var(--Neutral-500,#737373)] transition-colors hover:text-white'
+                          aria-label='What counts as qualified leads'
+                        >
+                          <CircleHelp className='size-[14px]' strokeWidth={1.75} aria-hidden data-node-id='644:1938' />
+                        </button>
+                      </li>
+                      <li>
+                        Additional leads:{' '}
+                        <span className='text-white'>
+                          <CountMoney
+                            active={inView}
+                            end={metrics.additionalLeadPrice ?? 0}
+                            className='text-white'
+                          />{' '}
+                          /lead
+                        </span>
+                      </li>
+                    </ul>
+                  </>
+                )}
               </div>
             </div>
           </PanelReveal>
 
           <PanelReveal visible={inView} staggerMs={280}>
-            <div className='flex min-h-[182px] flex-col overflow-hidden bg-[#213300] p-6'>
+            <div
+              key={`roi-${monthlyLeads}`}
+              className='flex min-h-[182px] flex-col overflow-hidden bg-[#213300] p-6'
+            >
               <p className='font-sans text-xs font-normal leading-[1.4] text-[color:var(--Primary-500,#b7f601)]'>
                 Projected Revenue
               </p>
               <CountRevenue
                 active={inView}
-                end={33600}
+                end={metrics.projectedRevenue}
                 className='mt-2 font-sans text-[40px] font-medium leading-[1.2] text-white'
               />
               <CountMultiplier
                 active={inView}
-                end={67.33}
+                end={metrics.roiMultiplier}
                 className='mt-2 font-sans text-base font-normal leading-[1.2] tracking-[0.01em] text-[#618902]'
               />
               <p className='mt-auto pt-6 font-sans text-base font-normal leading-[1.2] tracking-[0.01em] text-[#4b6059]'>
-                * At $4.2K avg revenue per lead
+                * At ${(AVG_REVENUE_PER_LEAD / 1000).toFixed(1)}K avg revenue per lead
               </p>
             </div>
           </PanelReveal>
@@ -447,7 +506,7 @@ export function SuggestedMetrics({
               className='inline-flex w-full items-center justify-center gap-2 bg-white px-4 py-3 font-mono text-sm font-normal leading-[1.4] tracking-[-0.02em] text-black sm:inline-flex sm:w-fit sm:justify-start'
               style={{ fontFeatureSettings: '"ss05" 1' }}
             >
-              CHECK PLANS
+              {metrics.ctaLabel}
               <Check className='size-4 shrink-0' strokeWidth={2.25} aria-hidden />
             </Link>
           </div>

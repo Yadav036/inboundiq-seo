@@ -2,19 +2,31 @@
 
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import { useId, useState } from 'react'
 
 import { APP_GET_STARTED_URL } from '@/lib/appUrls'
 import { cn } from '@/lib/utils'
 
+const MIN = 1
 const MAX = 50
-const TICKS = [0, 10, 20, 30, 40, 50] as const
+/** Scale labels every 10 (plus min at 1) */
+const TICKS = [1, 10, 20, 30, 40, 50] as const
+
+/** 0–100 along the track, matching `<input type="range" min max />` thumb position */
+function tickPercent(t: number) {
+  return ((t - MIN) / (MAX - MIN)) * 100
+}
 
 /** Figma 644:1877 — monthly leads slider + display + SEE PRICING */
-export function MonthlyLeadsSliderCard({ className }: { className?: string }) {
-  const [value, setValue] = useState(14)
-  const hintId = useId()
-  const pct = value / MAX
+export function MonthlyLeadsSliderCard({
+  className,
+  value,
+  onValueChange,
+}: {
+  className?: string
+  value: number
+  onValueChange: (value: number) => void
+}) {
+  const pct = (value - MIN) / (MAX - MIN)
 
   return (
     <div
@@ -27,10 +39,7 @@ export function MonthlyLeadsSliderCard({ className }: { className?: string }) {
       data-node-id='644:1877'
     >
       <div className='flex w-full flex-col gap-6'>
-        <p
-          id={hintId}
-          className='font-sans text-xs font-normal leading-[1.4] text-[color:var(--Neutral-500,#737373)]'
-        >
+        <p className='font-sans text-xs font-normal leading-[1.4] text-[color:var(--Neutral-500,#737373)]'>
           Drag to set your monthly leads
         </p>
 
@@ -47,31 +56,32 @@ export function MonthlyLeadsSliderCard({ className }: { className?: string }) {
             />
             <input
               type='range'
-              min={0}
+              min={MIN}
               max={MAX}
               value={value}
-              onChange={(e) => setValue(Number(e.target.value))}
+              onChange={(e) => onValueChange(Number(e.target.value))}
               className='absolute inset-0 z-10 h-full min-h-[44px] w-full cursor-pointer opacity-0'
-              aria-valuemin={0}
+              aria-valuemin={MIN}
               aria-valuemax={MAX}
               aria-valuenow={value}
-              aria-labelledby={hintId}
+              aria-label='Monthly qualified leads target'
             />
           </div>
-          <div className='mt-2 flex font-sans text-xs font-normal leading-[18px] text-[color:var(--Neutral-600,#a3a3a3)]'>
-            {TICKS.map((t, i) => (
-              <span
-                key={t}
-                className={cn(
-                  'min-w-0 flex-1',
-                  i === 0 && 'text-left',
-                  i === TICKS.length - 1 && 'text-right',
-                  i > 0 && i < TICKS.length - 1 && 'text-center',
-                )}
-              >
-                {t}
-              </span>
-            ))}
+          <div className='relative mx-[5px] mt-2 min-h-[18px] font-sans text-xs font-normal leading-[18px] text-[color:var(--Neutral-600,#a3a3a3)]'>
+            {TICKS.map((t) => {
+              const left = tickPercent(t)
+              const align =
+                t === MIN ? 'translateX(0)' : t === MAX ? 'translateX(-100%)' : 'translateX(-50%)'
+              return (
+                <span
+                  key={t}
+                  className='absolute top-0 whitespace-nowrap tabular-nums'
+                  style={{ left: `${left}%`, transform: align }}
+                >
+                  {t}
+                </span>
+              )
+            })}
           </div>
         </div>
       </div>

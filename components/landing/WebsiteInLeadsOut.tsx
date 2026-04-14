@@ -5,8 +5,8 @@ import { useEffect, useRef, useState } from 'react'
 import { WEBSITE_IN_LEADS_STEPS } from '@/components/landing/websiteInLeadsOutData'
 import { cn } from '@/lib/utils'
 
-/** px — must clear the fixed navbar so sticky cards don't hide behind it */
-const STICKY_TOP = 64
+/** px — must clear the fixed navbar so sticky cards pin below it (matches stacking scroll choreography) */
+const STICKY_TOP = 96
 
 const STEP_BACKGROUNDS = [
   '/landing/Background%20(2).png',
@@ -125,21 +125,23 @@ export function WebsiteInLeadsOut() {
         </nav>
       </div>
 
-      {/* ── Right stacking cards ── */}
+      {/* ── Right stacking cards ──
+          Tall lg-only wrappers create scroll distance so each lg:sticky card can pin before the next stacks on top. */}
       <div className='min-w-0 flex-1'>
         {WEBSITE_IN_LEADS_STEPS.map((step, i) => (
-          /* Fixed height gives the browser a concrete scroll distance to pin against.
-             140vh >> card height (75vh) = ~65vh of scroll room before next card slides in. */
-          <div key={step.badge} className='relative h-[140vh]'>
-            {/* Absolute spacer at top of wrapper — IntersectionObserver target */}
+          <div
+            key={step.badge}
+            className='relative h-auto lg:h-[140vh]'
+          >
+            {/* IntersectionObserver target — top edge of each scroll “stage” */}
             <div
               ref={(el) => { spacerRefs.current[i] = el }}
-              className='pointer-events-none absolute top-0 h-px w-full'
+              className='pointer-events-none absolute left-0 top-0 h-px w-full'
+              aria-hidden
             />
 
-            {/* Sticky card — later cards slide on top of earlier ones */}
             <div
-              className='sticky bg-[#0f0f0f]'
+              className='bg-[#0f0f0f] lg:sticky'
               style={{ top: STICKY_TOP, zIndex: i + 1 }}
             >
               <div className='flex min-h-[75vh] border border-[#303030]'>

@@ -19,6 +19,27 @@ const CELL_ANIM = [
   '[animation:ib-loader-cell-3_0.8s_linear_infinite]',
 ] as const
 
+/** Loader runs 2s, then card rises — no two loaders at once within each group */
+const LOADER_PHASE_S = 2
+
+function icpCardTimes(index: number) {
+  const loaderStart = 3.5 + index * LOADER_PHASE_S
+  const cardStart = loaderStart + LOADER_PHASE_S
+  return {
+    loaderDelay: `${loaderStart}s`,
+    cardDelay: `${cardStart}s`,
+  }
+}
+
+function leadCardTimes(index: number) {
+  const loaderStart = 11 + index * LOADER_PHASE_S
+  const cardStart = loaderStart + LOADER_PHASE_S
+  return {
+    loaderDelay: `${loaderStart}s`,
+    cardDelay: `${cardStart}s`,
+  }
+}
+
 // ── Icons ──────────────────────────────────────────────────
 
 function CheckIcon() {
@@ -81,12 +102,6 @@ function IbLoader({ className }: { className?: string }) {
   )
 }
 
-function twoSecondsBefore(delay: string): string {
-  const sec = Number.parseFloat(delay)
-  if (Number.isNaN(sec)) return delay
-  return `${Math.max(0, sec - 2).toFixed(1)}s`
-}
-
 // ── Sub-components ─────────────────────────────────────────
 
 /** Square green dot + uppercase label — matches Figma 636:738 header row */
@@ -123,15 +138,16 @@ function IcpCard({
   size,
   briefcase,
   building,
-  delay,
+  loaderDelay,
+  cardDelay,
 }: {
   title: string
   size: string
   briefcase: number
   building: number
-  delay: string
+  loaderDelay: string
+  cardDelay: string
 }) {
-  const loaderDelay = twoSecondsBefore(delay)
   return (
     <div className='hl-card-wrap' style={{ '--ls': loaderDelay } as CSSProperties}>
       <div className='hl-card-loader' aria-hidden>
@@ -141,7 +157,7 @@ function IcpCard({
         className='hl-icard'
         style={
           {
-            '--id': delay,
+            '--id': cardDelay,
             background: '#171717',
             border: 'none',
             padding: 12,
@@ -182,14 +198,15 @@ function LeadCard({
   initials,
   name,
   role,
-  delay,
+  loaderDelay,
+  cardDelay,
 }: {
   initials: string
   name: string
   role: string
-  delay: string
+  loaderDelay: string
+  cardDelay: string
 }) {
-  const loaderDelay = twoSecondsBefore(delay)
   return (
     <div className='hl-card-wrap' style={{ '--ls': loaderDelay } as CSSProperties}>
       <div className='hl-card-loader' aria-hidden>
@@ -199,7 +216,7 @@ function LeadCard({
         className='hl-lcard'
         style={
           {
-            '--ld': delay,
+            '--ld': cardDelay,
             background: '#171717',
             border: 'none',
             padding: 10,
@@ -282,10 +299,10 @@ export function HeroLimeAnimation({
       }, TYPE_INTERVAL_MS)
     }, TYPE_DELAY_MS)
 
-    // Auto-loop: restart after all card animations finish (~13 s) + brief pause
+    // Auto-loop: after last lead card rise (~17s) + brief pause
     const loopId = setTimeout(() => {
       if (!cancelled) setSceneKey((k) => k + 1)
-    }, 14000)
+    }, 19000)
 
     return () => {
       cancelled = true
@@ -377,29 +394,29 @@ export function HeroLimeAnimation({
                 size='20–100 employees'
                 briefcase={2}
                 building={13}
-                delay='3.5s'
+                {...icpCardTimes(0)}
               />
               <IcpCard
                 title='VP of Marketing at B2B companies'
                 size='20–100 employees'
                 briefcase={3}
                 building={22}
-                delay='4.5s'
+                {...icpCardTimes(1)}
               />
               <IcpCard
                 title='Head of Growth at PLG startups'
                 size='10–50 employees'
                 briefcase={5}
                 building={18}
-                delay='5.5s'
+                {...icpCardTimes(2)}
               />
             </div>
           </div>
 
           {/* connector */}
           <div className='hl-vwrap'>
-            <div className='hl-vline' style={{ '--vd': '6.6s' } as CSSProperties} />
-            <div className='hl-vdot' style={{ '--dd': '7.4s' } as CSSProperties} />
+            <div className='hl-vline' style={{ '--vd': '9.8s' } as CSSProperties} />
+            <div className='hl-vdot' style={{ '--dd': '10.4s' } as CSSProperties} />
           </div>
 
           {/* ── Panel 3: Leads (Figma 636:840) ── */}
@@ -407,8 +424,8 @@ export function HeroLimeAnimation({
             className='hl-panel'
             style={
               {
-                '--pd': '7.5s',
-                '--ps': '7.8s',
+                '--pd': '10.5s',
+                '--ps': '10.8s',
                 background: '#030303',
                 borderColor: '#303030',
                 padding: 8,
@@ -424,19 +441,19 @@ export function HeroLimeAnimation({
                 initials='SC'
                 name='Sarah Chen'
                 role='VP Marketing · Reforge'
-                delay='7.9s'
+                {...leadCardTimes(0)}
               />
               <LeadCard
                 initials='DM'
                 name='David Martinez'
                 role='Lead Product Designer · Airbnb'
-                delay='8.9s'
+                {...leadCardTimes(1)}
               />
               <LeadCard
                 initials='AH'
                 name='Amina Hassan'
                 role='Head of Growth · Lattice'
-                delay='9.9s'
+                {...leadCardTimes(2)}
               />
             </div>
           </div>

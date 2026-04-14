@@ -109,6 +109,7 @@ function SectionShell({
 
 export function LandingSections() {
   const [isQualifiedModalOpen, setIsQualifiedModalOpen] = useState(false)
+  const [monthlyLeads, setMonthlyLeads] = useState(14)
 
   return (
     <>
@@ -192,6 +193,7 @@ export function LandingSections() {
           >
             <SuggestedMetrics
               className='mt-0'
+              monthlyLeads={monthlyLeads}
               qualifiedModalOpen={isQualifiedModalOpen}
               onQualifiedModalOpenChange={setIsQualifiedModalOpen}
             />
@@ -199,7 +201,11 @@ export function LandingSections() {
               delayMs={150}
               className='w-full max-w-[320px] justify-self-center lg:w-[320px] lg:max-w-none lg:justify-self-stretch xl:w-[340px]'
             >
-              <MonthlyLeadsSliderCard className='w-full max-w-none' />
+              <MonthlyLeadsSliderCard
+                className='w-full max-w-none'
+                value={monthlyLeads}
+                onValueChange={setMonthlyLeads}
+              />
             </ScrollReveal>
           </div>
         </div>
