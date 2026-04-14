@@ -131,7 +131,7 @@ export function WebsiteInLeadsOut() {
         {WEBSITE_IN_LEADS_STEPS.map((step, i) => (
           <div
             key={step.badge}
-            className='relative h-auto lg:h-[140vh]'
+            className='relative h-auto sticky top-[96px]'
           >
             {/* IntersectionObserver target — top edge of each scroll “stage” */}
             <div
@@ -141,22 +141,22 @@ export function WebsiteInLeadsOut() {
             />
 
             <div
-              className='bg-[#0f0f0f] lg:sticky'
+              className='bg-[#0f0f0f] my-6'
               style={{
-                top: STICKY_TOP,
                 zIndex: i + 1,
+                top: STICKY_TOP,
                 borderTop: i > 0 ? '1px solid #303030' : undefined,
                 boxShadow: i > 0 ? '0 -12px 32px 0 rgba(0,0,0,1)' : undefined,
               }}
             >
-              <div className='flex min-h-[75vh] border border-[#303030]'>
+              <div className='flex min-h-[50vh] border border-[#303030]'>
                 {/* Visual panel — background image */}
                 <div
                   className='relative hidden flex-shrink-0 md:block'
                   style={{
                     width: '52%',
                     backgroundImage: `url('${STEP_BACKGROUNDS[i]}')`,
-                    backgroundSize: 'cover',
+                    backgroundSize: 'contain',
                     backgroundPosition: 'center',
                   }}
                 />
