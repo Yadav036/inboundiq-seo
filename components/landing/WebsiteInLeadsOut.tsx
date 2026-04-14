@@ -142,7 +142,12 @@ export function WebsiteInLeadsOut() {
 
             <div
               className='bg-[#0f0f0f] lg:sticky'
-              style={{ top: STICKY_TOP, zIndex: i + 1 }}
+              style={{
+                top: STICKY_TOP,
+                zIndex: i + 1,
+                borderTop: i > 0 ? '1px solid #303030' : undefined,
+                boxShadow: i > 0 ? '0 -12px 32px 0 rgba(0,0,0,1)' : undefined,
+              }}
             >
               <div className='flex min-h-[75vh] border border-[#303030]'>
                 {/* Visual panel — background image */}

@@ -155,31 +155,47 @@ export function LandingSections() {
       <SectionShell id='pricing' labelledBy='heading-leads'>
         <div className='flex flex-col pt-16 pb-16 md:pt-20 md:pb-20 lg:pt-24'>
           <ScrollReveal delayMs={40}>
-            <h2
-              id='heading-leads'
-              className={cn(
-                displayHeading,
-                'mx-auto max-w-[22ch] text-center leading-[1.1] md:max-w-[36rem]',
-              )}
-            >
-              <span className='leading-[1.1]'>How many </span>
-              <span className='leading-[1.1] text-[color:var(--Primary-500,#B7F601)]'>
-                qualified leads
-                <button
-                  type='button'
-                  onClick={() => setIsQualifiedModalOpen(true)}
-                  className='ms-2 inline-flex items-center align-middle text-[color:var(--Neutral-500,#737373)] transition-colors hover:text-white'
-                  aria-label='What counts as qualified leads'
+            <div className='flex flex-col items-center'>
+              {/* Figma 644:1833 — kicker above pricing headline */}
+              <div
+                className='mb-5 inline-flex w-fit items-center gap-2 border border-white bg-[#030303] px-[10px] py-[5px] shadow-[0_0_0_1px_rgba(255,255,255,0.06)]'
+                style={{ borderWidth: '0.5px' }}
+                data-node-id='644:1833'
+              >
+                <span className='size-[7px] shrink-0 bg-white' aria-hidden />
+                <p
+                  className='font-mono text-[10px] font-normal uppercase leading-[1.4] tracking-[-0.4px] text-white'
+                  style={{ fontFeatureSettings: "'ss05' 1" }}
                 >
-                  <CircleHelp
-                    className='size-[30px]'
-                    strokeWidth={1.6}
-                    aria-hidden
-                  />
-                </button>
-              </span>
-              <span className='leading-[1.1]'> do you want this month?</span>
-            </h2>
+                  WHO IT&apos;S FOR
+                </p>
+              </div>
+              <h2
+                id='heading-leads'
+                className={cn(
+                  displayHeading,
+                  'mx-auto max-w-[22ch] text-center leading-[1.1] md:max-w-[36rem]',
+                )}
+              >
+                <span className='leading-[1.1]'>How many </span>
+                <span className='leading-[1.1] text-[color:var(--Primary-500,#B7F601)]'>
+                  qualified leads
+                  <button
+                    type='button'
+                    onClick={() => setIsQualifiedModalOpen(true)}
+                    className='ms-2 inline-flex items-center align-middle text-[color:var(--Neutral-500,#737373)] transition-colors hover:text-white'
+                    aria-label='What counts as qualified leads'
+                  >
+                    <CircleHelp
+                      className='size-[30px]'
+                      strokeWidth={1.6}
+                      aria-hidden
+                    />
+                  </button>
+                </span>
+                <span className='leading-[1.1]'> do you want this month?</span>
+              </h2>
+            </div>
           </ScrollReveal>
           <QualifiedCriteriaPanel
             open={isQualifiedModalOpen}

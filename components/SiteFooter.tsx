@@ -19,8 +19,6 @@ const FOOTER_COLUMNS: {
       { label: 'How it works', href: '/#how-it-works' },
       { label: 'Features', href: '/#built-b2b' },
       { label: 'Pricing', href: '/pricing' },
-      { label: 'Integrations', href: '#' },
-      { label: 'Changelog', href: '#' },
     ],
   },
   {
@@ -36,8 +34,6 @@ const FOOTER_COLUMNS: {
   {
     title: 'Company',
     links: [
-      { label: 'About', href: '#' },
-      { label: 'Careers', href: '#' },
       { label: 'Contact Us', href: APP_GET_STARTED_URL },
       { label: 'Privacy', href: APP_PRIVACY_URL },
       { label: 'Terms', href: APP_TERMS_URL },
