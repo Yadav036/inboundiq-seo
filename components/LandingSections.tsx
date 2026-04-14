@@ -256,6 +256,8 @@ export function LandingSections() {
         </ScrollReveal>
       </SectionShell>
 
+      <SectionBreak />
+
       <SectionShell
         id='common-questions'
         labelledBy='heading-common-questions'
