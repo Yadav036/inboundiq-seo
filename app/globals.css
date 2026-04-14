@@ -11,8 +11,10 @@
 @layer components {
   .page-wrap {
     position: relative;
-    /* x-only: full overflow:hidden breaks position:sticky on the header */
-    overflow-x: hidden;
+    /* overflow-x: clip — clips visually without creating a scroll context.
+       overflow-x: hidden would implicitly set overflow-y: auto (CSS spec),
+       creating a new scroll container that breaks position: sticky. */
+    overflow-x: clip;
   }
 }
 

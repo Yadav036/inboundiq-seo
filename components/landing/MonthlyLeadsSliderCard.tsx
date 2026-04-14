@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useId, useState } from 'react'
 
+import { APP_GET_STARTED_URL } from '@/lib/appUrls'
 import { cn } from '@/lib/utils'
 
 const MAX = 50
@@ -89,7 +90,7 @@ export function MonthlyLeadsSliderCard({ className }: { className?: string }) {
         </div>
 
         <Link
-          href='/pricing'
+          href={APP_GET_STARTED_URL}
           className='inline-flex items-center gap-1 self-start py-3 font-mono text-sm font-normal leading-[1.4] tracking-[-0.02em] text-[color:var(--Primary-500,#b7f601)]'
           style={{ fontFeatureSettings: '"ss05" 1' }}
         >

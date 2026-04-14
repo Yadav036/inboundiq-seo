@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 
+import { APP_GET_STARTED_URL } from '@/lib/appUrls'
 import { cn } from '@/lib/utils'
 
 const OVERLAY_SRC = '/pricing-overlay.png'
@@ -24,7 +25,7 @@ export function PricingCard({
   price,
   period = '/month',
   ctaLabel = 'Get started',
-  ctaHref = '/demo',
+  ctaHref = APP_GET_STARTED_URL,
   className,
 }: PricingCardProps) {
   return (

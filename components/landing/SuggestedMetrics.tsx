@@ -1,11 +1,12 @@
 'use client'
 
-import type { ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import Link from 'next/link'
-import { Check } from 'lucide-react'
+import { Check, CircleHelp, X } from 'lucide-react'
 
 import { useCountUp } from '@/hooks/useCountUp'
 import { useInViewOnce } from '@/hooks/useInViewOnce'
+import { APP_GET_STARTED_URL } from '@/lib/appUrls'
 import { cn } from '@/lib/utils'
 
 /** Figma 644:1943 — “Suggested Metrics” block (pricing / leads section) */
@@ -162,8 +163,127 @@ function PanelReveal({
   )
 }
 
-export function SuggestedMetrics({ className }: { className?: string }) {
+/** Exported so LandingSections can render it inline below the heading */
+export function QualifiedCriteriaPanel({
+  open,
+  onClose,
+}: {
+  open: boolean
+  onClose: () => void
+}) {
+  const countsAsQualified = [
+    'Asking for more details',
+    'Requesting a call or demo',
+    'Responding positively to your value offer',
+  ]
+
+  const doesNotCount = [
+    { strong: 'Auto-replies', text: ' "I’m out of the office until..."' },
+    { strong: 'Not interested', text: ' "Thanks but not for us right now"' },
+    { strong: 'Bounces / spam', text: ' Undeliverable or filtered' },
+  ]
+
+  return (
+    <div
+      className={cn(
+        'overflow-hidden transition-[max-height,opacity] duration-300 ease-out',
+        open ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0',
+      )}
+    >
+      <div className='mt-6 max-w-[680px] mx-auto border border-[#303030] bg-[#171717] p-5'>
+        <div className='flex items-start gap-2'>
+          <div className='flex-1 space-y-1.5'>
+            <p className='font-sans text-base font-normal leading-[1.2] tracking-[-0.02em] text-white'>
+              What counts as Qualified
+            </p>
+            <p className='font-sans text-xs font-normal leading-[1.4] text-[color:var(--Neutral-500,#737373)]'>
+              A real human reply that shows clear interest in your offer.
+            </p>
+          </div>
+          <button
+            type='button'
+            onClick={onClose}
+            className='inline-flex items-center justify-center text-[color:var(--Neutral-500,#737373)] transition-colors hover:text-white'
+            aria-label='Close qualified criteria'
+          >
+            <X className='size-4' strokeWidth={1.8} aria-hidden />
+          </button>
+        </div>
+
+        <div className='mt-5 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6'>
+          <div className='space-y-2'>
+            <p className='font-sans text-xs font-normal leading-[1.4] text-[#00bc7d]'>
+              Counts as qualified
+            </p>
+            <ul className='space-y-1'>
+              {countsAsQualified.map((item) => (
+                <li
+                  key={item}
+                  className='flex items-start gap-2 font-sans text-xs font-normal leading-[1.4] text-white'
+                >
+                  <Check className='mt-0.5 size-[13px] shrink-0 text-[#00bc7d]' strokeWidth={2} aria-hidden />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className='space-y-2'>
+            <p className='font-sans text-xs font-normal leading-[1.4] text-[#ef4444]'>
+              Does not count
+            </p>
+            <ul className='space-y-1'>
+              {doesNotCount.map((item) => (
+                <li
+                  key={item.strong}
+                  className='flex items-start gap-2 font-sans text-xs font-normal leading-[1.4] text-[color:var(--Neutral-500,#737373)]'
+                >
+                  <X className='mt-0.5 size-[13px] shrink-0 text-[#ef4444]' strokeWidth={2} aria-hidden />
+                  <span>
+                    <span className='font-semibold text-white'>{item.strong}</span>
+                    {item.text}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function SuggestedMetrics({
+  className,
+  qualifiedModalOpen,
+  onQualifiedModalOpenChange,
+}: {
+  className?: string
+  qualifiedModalOpen?: boolean
+  onQualifiedModalOpenChange?: (open: boolean) => void
+}) {
   const { ref, inView } = useInViewOnce()
+  const [internalQualifiedModalOpen, setInternalQualifiedModalOpen] = useState(false)
+  const isQualifiedModalOpen =
+    qualifiedModalOpen ?? internalQualifiedModalOpen
+
+  function setQualifiedModalOpen(open: boolean) {
+    onQualifiedModalOpenChange?.(open)
+    if (qualifiedModalOpen === undefined) {
+      setInternalQualifiedModalOpen(open)
+    }
+  }
+
+  useEffect(() => {
+    if (!isQualifiedModalOpen) return
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setQualifiedModalOpen(false)
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [isQualifiedModalOpen])
 
   return (
     <div
@@ -247,7 +367,7 @@ export function SuggestedMetrics({ className }: { className?: string }) {
                   Best Plan for you
                 </p>
                 <Link
-                  href='/pricing'
+                  href={APP_GET_STARTED_URL}
                   className='shrink-0 font-mono text-sm font-normal leading-[1.4] tracking-[-0.02em] text-[color:var(--Primary-500,#b7f601)]'
                   style={{ fontFeatureSettings: '"ss05" 1' }}
                 >
@@ -274,6 +394,14 @@ export function SuggestedMetrics({ className }: { className?: string }) {
                       />{' '}
                       qualified leads
                     </span>
+                    <button
+                      type='button'
+                      onClick={() => setQualifiedModalOpen(true)}
+                      className='ms-1 inline-flex align-middle text-[color:var(--Neutral-500,#737373)] transition-colors hover:text-white'
+                      aria-label='What counts as qualified leads'
+                    >
+                      <CircleHelp className='size-[14px]' strokeWidth={1.75} aria-hidden data-node-id='644:1938' />
+                    </button>
                   </li>
                   <li>
                     Additional leads:{' '}
@@ -288,7 +416,7 @@ export function SuggestedMetrics({ className }: { className?: string }) {
           </PanelReveal>
 
           <PanelReveal visible={inView} staggerMs={280}>
-            <div className='flex min-h-[182px] flex-col overflow-hidden bg-[#213300] p-3'>
+            <div className='flex min-h-[182px] flex-col overflow-hidden bg-[#213300] p-6'>
               <p className='font-sans text-xs font-normal leading-[1.4] text-[color:var(--Primary-500,#b7f601)]'>
                 Projected Revenue
               </p>
@@ -310,9 +438,12 @@ export function SuggestedMetrics({ className }: { className?: string }) {
         </div>
 
         <PanelReveal visible={inView} staggerMs={340}>
-          <div className='flex w-full min-h-[100px] flex-col justify-center border border-[#303030] bg-[var(--Neutral-100,#171717)] p-4 sm:min-h-[120px]'>
+          <div
+            className='flex w-full min-h-[100px] flex-col justify-center border border-[#303030] bg-[var(--Neutral-100,#171717)] bg-cover bg-center p-4 sm:min-h-[120px]'
+            style={{ backgroundImage: "url('/section-break.png')" }}
+          >
             <Link
-              href='/pricing'
+              href={APP_GET_STARTED_URL}
               className='inline-flex w-full items-center justify-center gap-2 bg-white px-4 py-3 font-mono text-sm font-normal leading-[1.4] tracking-[-0.02em] text-black sm:inline-flex sm:w-fit sm:justify-start'
               style={{ fontFeatureSettings: '"ss05" 1' }}
             >
@@ -322,6 +453,7 @@ export function SuggestedMetrics({ className }: { className?: string }) {
           </div>
         </PanelReveal>
       </div>
+
     </div>
   )
 }

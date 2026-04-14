@@ -3,12 +3,40 @@
 import { ArrowUp, Globe } from 'lucide-react'
 import { FormEvent, useState } from 'react'
 
+import { APP_GET_STARTED_URL } from '@/lib/appUrls'
+
+/**
+ * Extracts a clean domain from whatever the user typed.
+ * Handles: "example.com", "https://example.com", "www.example.com/path", etc.
+ * Returns empty string if input is blank or unparseable.
+ */
+function parseDomain(raw: string): string {
+  const s = raw.trim()
+  if (!s) return ''
+  // Prepend protocol so URL() can parse bare domains like "acme.com"
+  const withProtocol = /^https?:\/\//i.test(s) ? s : `https://${s}`
+  try {
+    const { hostname } = new URL(withProtocol)
+    return hostname.replace(/^www\./i, '')
+  } catch {
+    // Fallback: strip manually for truly malformed strings
+    return s
+      .replace(/^https?:\/\//i, '')
+      .replace(/^www\./i, '')
+      .split('/')[0]
+      .split('?')[0]
+  }
+}
+
 export function HeroWebsiteInput() {
   const [value, setValue] = useState('')
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    // Hook up analytics / navigation when flow exists
+    const domain = parseDomain(value)
+    const dest = new URL(APP_GET_STARTED_URL)
+    if (domain) dest.searchParams.set('website', domain)
+    window.location.assign(dest.toString())
   }
 
   return (
@@ -24,7 +52,7 @@ export function HeroWebsiteInput() {
           aria-hidden
         />
         <input
-          type='url'
+          type='text'
           name='website'
           value={value}
           onChange={(e) => setValue(e.target.value)}

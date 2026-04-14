@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Check, ChevronRight, X } from 'lucide-react'
 
 import { Logo } from '@/components/svg/Logo'
+import { APP_GET_STARTED_URL } from '@/lib/appUrls'
 import { cn } from '@/lib/utils'
 
 type Cell =
@@ -95,13 +96,7 @@ function CellContent({ cell }: { cell: Cell }) {
 
 export function CompareTable({ className }: { className?: string }) {
   return (
-    <div
-      className={cn(
-        '-mx-4 overflow-x-auto px-4 sm:mx-0 sm:overflow-visible sm:px-0',
-        className,
-      )}
-    >
-      <table className='w-full min-w-[720px] border-collapse text-left'>
+    <table className={cn('w-full min-w-[720px] border-collapse text-left', className)}>
         <colgroup>
           <col className='w-[min(28%,220px)]' />
           <col />
@@ -179,7 +174,7 @@ export function CompareTable({ className }: { className?: string }) {
             <td className='p-0' colSpan={3} />
             <td className='border-l border-[#303030] bg-[color:var(--Neutral-100,#171717)] px-4 pb-1 pt-6 text-center'>
               <Link
-                href='/demo'
+                href={APP_GET_STARTED_URL}
                 className='inline-flex w-full items-center justify-center gap-1 bg-white px-4 py-3 font-mono text-sm font-normal leading-[1.4] tracking-[-0.02em] text-black transition-opacity hover:opacity-90'
               >
                 TRY INBOUNDIQ
@@ -189,6 +184,5 @@ export function CompareTable({ className }: { className?: string }) {
           </tr>
         </tbody>
       </table>
-    </div>
   )
 }

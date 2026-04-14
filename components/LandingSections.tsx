@@ -1,18 +1,81 @@
-import type { ReactNode } from 'react'
+'use client'
 
-import { FeatureCard } from '@/components/landing/FeatureCard'
-import { B2B_FEATURES } from '@/components/landing/b2bFeatures'
-import { IndustryShowcase } from '@/components/landing/IndustryShowcase'
+import { useState, type ReactNode } from 'react'
+import { CircleHelp } from 'lucide-react'
+
 import { BackgroundFeaturesGrid } from '@/components/landing/BackgroundFeaturesGrid'
 import { SectionBreak } from '@/components/landing/SectionBreak'
+import { SuggestedMetrics, QualifiedCriteriaPanel } from '@/components/landing/SuggestedMetrics'
 import { MonthlyLeadsSliderCard } from '@/components/landing/MonthlyLeadsSliderCard'
-import { SuggestedMetrics } from '@/components/landing/SuggestedMetrics'
 import { WebsiteInLeadsOut } from '@/components/landing/WebsiteInLeadsOut'
 import { CommonQuestionsSection } from '@/components/landing/CommonQuestionsSection'
 import { CompareSectionStats } from '@/components/landing/CompareSectionStats'
 import { CompareTable } from '@/components/landing/CompareTable'
 import { ScrollReveal } from '@/components/landing/ScrollReveal'
+import { APP_GET_STARTED_URL } from '@/lib/appUrls'
 import { cn } from '@/lib/utils'
+
+/** Figma 651:2505 — stat strip below compare table */
+function CompareStatStrip() {
+  return (
+    <div
+      className='mt-10 flex items-end justify-between md:mt-12 lg:mt-14'
+      data-node-id='651:2505'
+    >
+      {/* Left: two big stat blocks */}
+      <div className='flex items-center gap-12 sm:gap-16 md:gap-20'>
+        {/* 92% */}
+        <div className='flex flex-col gap-2'>
+          <p className='font-sans text-xs font-normal leading-[18px] text-[color:var(--Neutral-600,#a3a3a3)]'>
+            Upto
+          </p>
+          <p className='font-sans text-[clamp(3rem,7vw,4.5rem)] font-medium leading-none tracking-[-0.04em] text-white'>
+            92%
+          </p>
+          <p className='font-sans text-xs font-normal leading-[18px] text-[color:var(--Neutral-600,#a3a3a3)]'>
+            vs. hiring an SDR
+          </p>
+        </div>
+
+        {/* $6,001 */}
+        <div className='flex flex-col gap-2'>
+          <p className='font-sans text-xs font-normal leading-[18px] text-[color:var(--Neutral-600,#a3a3a3)]'>
+            Save
+          </p>
+          <div className='flex items-end gap-2'>
+            <p className='font-sans text-[clamp(3rem,7vw,4.5rem)] font-medium leading-none tracking-[-0.04em] text-white'>
+              $6,001
+            </p>
+            <p className='mb-[5px] font-sans text-xs font-normal leading-[18px] text-[color:var(--Neutral-600,#a3a3a3)]'>
+              /month
+            </p>
+          </div>
+          <p className='font-sans text-xs font-normal leading-[18px] text-[color:var(--Neutral-600,#a3a3a3)]'>
+            vs. an SDR
+          </p>
+        </div>
+      </div>
+
+      {/* Right: SEE PRICING link */}
+      <a
+        href={APP_GET_STARTED_URL}
+        className='inline-flex items-center gap-1 p-3 font-mono text-sm font-normal leading-[1.4] tracking-[-0.02em] text-[color:var(--Primary-500,#b7f601)] transition-opacity hover:opacity-80'
+        style={{ fontFeatureSettings: "'ss05' 1" }}
+      >
+        SEE PRICING
+        <svg width='18' height='18' viewBox='0 0 18 18' fill='none' aria-hidden>
+          <path
+            d='M3.75 9h10.5M9.75 4.5l4.5 4.5-4.5 4.5'
+            stroke='currentColor'
+            strokeWidth='1.4'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+          />
+        </svg>
+      </a>
+    </div>
+  )
+}
 
 const displayHeading = cn(
   'font-sans font-medium leading-none tracking-[-0.02em] text-white',
@@ -39,60 +102,52 @@ function SectionShell({
         className,
       )}
     >
-      <div className='mx-auto w-full max-w-[1320px] px-0'>{children}</div>
+      <div className='mx-auto w-full max-w-[1320px] p-8'>{children}</div>
     </section>
   )
 }
 
 export function LandingSections() {
+  const [isQualifiedModalOpen, setIsQualifiedModalOpen] = useState(false)
+
   return (
     <>
       <SectionShell id='website-in-leads-out' labelledBy='heading-website-leads'>
-        <ScrollReveal>
-          <div className='flex flex-col pt-16 pb-12 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20'>
-            <WebsiteInLeadsOut />
-          </div>
-        </ScrollReveal>
+        <div className='flex flex-col pt-16 pb-12 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20'>
+          <WebsiteInLeadsOut />
+        </div>
       </SectionShell>
 
       {/* 654:3033 ×6 — background feature grid + illustrations */}
       <SectionShell id='how-it-works' labelledBy='heading-background'>
         <ScrollReveal delayMs={40}>
           <div className='flex flex-col pt-20 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-20'>
+            <div
+              className='mb-5 inline-flex h-7 w-fit items-center gap-2 border border-white bg-[#030303] px-3 py-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]'
+              style={{ borderWidth: '0.5px' }}
+            >
+              <span className='size-2 shrink-0 bg-white' aria-hidden />
+              <p
+                className='font-mono text-[10px] font-normal uppercase leading-[1.4] tracking-[-0.04em] text-white'
+                style={{ fontFeatureSettings: "'ss05' 1" }}
+              >
+                CAPABILITIES
+              </p>
+            </div>
             <h2
               id='heading-background'
-              className={cn(displayHeading, 'max-w-[18ch] text-left')}
+              className={cn(displayHeading, 'max-w-[22ch] text-left')}
             >
-              Everything runs in
-              <br />
-              the background
+              Everything, Done-for-you
             </h2>
+            <p className='mt-4 max-w-[44ch] font-sans text-sm font-normal leading-[1.5] text-[color:var(--Neutral-500,#737373)] md:text-base'>
+              All the moving parts, without the manual work.
+            </p>
             <BackgroundFeaturesGrid />
           </div>
         </ScrollReveal>
       </SectionShell>
 
-      <SectionBreak />
-
-      {/* 619:614, 619:618, 654:3029, 654:3033, 654:3037 — feature grid */}
-      <SectionShell id='built-b2b' labelledBy='heading-b2b'>
-        <ScrollReveal delayMs={80}>
-          <div className='flex flex-col pt-16 pb-4 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20'>
-            <h2
-              id='heading-b2b'
-              className={cn(displayHeading, 'max-w-[20ch] text-left')}
-            >
-              Built for every B2B
-              <br />
-              business
-            </h2>
-     
-
-            {/* 578:8289 + 578:8340 — industry selector + detail */}
-            <IndustryShowcase />
-          </div>
-        </ScrollReveal>
-      </SectionShell>
 
       <SectionBreak />
 
@@ -109,19 +164,37 @@ export function LandingSections() {
               <span className='leading-[1.1]'>How many </span>
               <span className='leading-[1.1] text-[color:var(--Primary-500,#B7F601)]'>
                 qualified leads
+                <button
+                  type='button'
+                  onClick={() => setIsQualifiedModalOpen(true)}
+                  className='ms-2 inline-flex items-center align-middle text-[color:var(--Neutral-500,#737373)] transition-colors hover:text-white'
+                  aria-label='What counts as qualified leads'
+                >
+                  <CircleHelp
+                    className='size-[30px]'
+                    strokeWidth={1.6}
+                    aria-hidden
+                  />
+                </button>
               </span>
               <span className='leading-[1.1]'> do you want this month?</span>
             </h2>
           </ScrollReveal>
+          <QualifiedCriteriaPanel
+            open={isQualifiedModalOpen}
+            onClose={() => setIsQualifiedModalOpen(false)}
+          />
           <div
             className={cn(
               'mt-10 grid w-full grid-cols-1 items-start gap-8 md:mt-12 lg:mt-14',
               'lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_340px] xl:gap-10',
             )}
           >
-            <div className='min-w-0'>
-              <SuggestedMetrics className='mt-0' />
-            </div>
+            <SuggestedMetrics
+              className='mt-0'
+              qualifiedModalOpen={isQualifiedModalOpen}
+              onQualifiedModalOpenChange={setIsQualifiedModalOpen}
+            />
             <ScrollReveal
               delayMs={150}
               className='w-full max-w-[320px] justify-self-center lg:w-[320px] lg:max-w-none lg:justify-self-stretch xl:w-[340px]'
@@ -136,7 +209,7 @@ export function LandingSections() {
 
       <SectionShell id='compare' labelledBy='heading-compare'>
         <ScrollReveal delayMs={160}>
-          <div className='flex flex-col pt-8 pb-24 md:pt-12 md:pb-28 lg:pt-16 lg:pb-32'>
+          <div className='flex flex-col'>
             <div
               className='inline-flex h-7 w-fit items-center gap-2 border border-white bg-[#030303] px-3 py-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]'
               style={{ borderWidth: '0.5px' }}
@@ -154,8 +227,9 @@ export function LandingSections() {
               <br />
               compare?
             </h2>
-            <CompareSectionStats className='mt-8 md:mt-10 lg:mt-12' />
-            <CompareTable className='mt-10 md:mt-12 lg:mt-14' />
+            <CompareSectionStats className='mt-8  lg:mt-12' />
+            <CompareTable className='mt-2' />
+            <CompareStatStrip />
           </div>
         </ScrollReveal>
       </SectionShell>
@@ -165,7 +239,7 @@ export function LandingSections() {
         labelledBy='heading-common-questions'
       >
         <ScrollReveal delayMs={200}>
-          <div className='flex flex-col pb-24 pt-16 md:pb-28 md:pt-20 lg:pb-32 lg:pt-24'>
+          <div className='flex flex-col pb-24  md:pb-28 '>
             <CommonQuestionsSection />
           </div>
         </ScrollReveal>

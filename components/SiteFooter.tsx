@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Mail } from 'lucide-react'
 
 import { Logo } from '@/components/svg/Logo'
+import { APP_GET_STARTED_URL } from '@/lib/appUrls'
 import { cn } from '@/lib/utils'
 
 const FOOTER_COLUMNS: {
@@ -33,7 +34,7 @@ const FOOTER_COLUMNS: {
     links: [
       { label: 'About', href: '#' },
       { label: 'Careers', href: '#' },
-      { label: 'Contact Us', href: '/demo' },
+      { label: 'Contact Us', href: APP_GET_STARTED_URL },
       { label: 'Privacy', href: '/privacy' },
       { label: 'Terms', href: '/terms' },
     ],

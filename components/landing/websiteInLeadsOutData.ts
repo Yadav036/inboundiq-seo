@@ -12,33 +12,29 @@ export const WEBSITE_IN_LEADS_STEPS: WebsiteInLeadsStep[] = [
   {
     badge: '01',
     tabLabel: 'Website',
-    title: 'Drop your URL',
-    description:
-      'Our AI analyzes your product, value props, and ideal buyer profile in seconds. No forms, no onboarding calls.',
+    title: 'We learn your business',
+    description: 'From one URL, we know where to start.',
     visual: 'figma-step1',
   },
   {
     badge: '02',
     tabLabel: 'Finding buyers',
-    title: 'We surface your ICP',
-    description:
-      'InboundIQ maps accounts and contacts that match your story—intent, firmographics, and fit—so outbound isn’t a guessing game.',
+    title: 'We find the right people',
+    description: 'Best-fit buyers, ranked by signal and intent.',
     visual: 'accent',
   },
   {
     badge: '03',
-    tabLabel: 'Personalized outreach',
-    title: 'Human-grade messages at scale',
-    description:
-      'Sequences adapt to each prospect with context from your site and their world—so every touch feels deliberate, not templated.',
+    tabLabel: 'Outreach',
+    title: 'We do the writing',
+    description: 'Personal, relevant, and ready to send at scale.',
     visual: 'accent',
   },
   {
     badge: '04',
-    tabLabel: 'Pay for interested reply',
-    title: 'Only pay when they engage',
-    description:
-      'Budget follows outcomes: you’re billed for qualified replies, not spray-and-pray sends—clear ROI from week one.',
+    tabLabel: 'Replies',
+    title: 'You only pay later',
+    description: 'Pay when qualified buyers actually respond.',
     visual: 'accent',
   },
 ]

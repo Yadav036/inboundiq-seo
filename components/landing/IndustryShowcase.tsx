@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 import { OutlineContentCard } from '@/components/landing/OutlineContentCard'
+import { APP_GET_STARTED_URL } from '@/lib/appUrls'
 import { cn } from '@/lib/utils'
 
 import { INDUSTRIES, type IndustryId } from './industryShowcaseData'
@@ -83,7 +84,7 @@ export function IndustryShowcase() {
               </div>
 
               <Link
-                href='/demo'
+                href={APP_GET_STARTED_URL}
                 className='inline-flex w-fit items-center justify-center gap-1 border border-[#303030] px-4 py-3 font-mono text-sm leading-[1.4] tracking-[-0.02em] text-white transition-colors hover:border-neutral-500'
                 style={{ fontFeatureSettings: "'ss05' 1" }}
               >

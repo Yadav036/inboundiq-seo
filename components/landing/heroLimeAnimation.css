@@ -212,6 +212,22 @@
   gap: 8px;
 }
 
+.hero-lime-scope .hl-card-wrap {
+  position: relative;
+}
+
+.hero-lime-scope .hl-card-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+  animation: hl-card-loader 2s linear var(--ls, 0s) forwards;
+}
+
 .hero-lime-scope .hl-icard {
   width: 100%;
   min-width: 0;
@@ -600,4 +616,38 @@
   to {
     opacity: 1;
   }
+}
+
+@keyframes hl-card-loader {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  8%,
+  92% {
+    opacity: 1;
+  }
+}
+
+/* 2x2 loader clockwise chase */
+@keyframes ib-loader-cell-0 {
+  0%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0.18; }
+}
+
+@keyframes ib-loader-cell-1 {
+  0%, 100% { opacity: 0.18; }
+  25% { opacity: 1; }
+  50%, 75% { opacity: 0.18; }
+}
+
+@keyframes ib-loader-cell-2 {
+  0%, 25%, 100% { opacity: 0.18; }
+  50% { opacity: 1; }
+  75% { opacity: 0.18; }
+}
+
+@keyframes ib-loader-cell-3 {
+  0%, 50%, 100% { opacity: 0.18; }
+  75% { opacity: 1; }
 }
