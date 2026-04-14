@@ -9,7 +9,6 @@ import { SuggestedMetrics, QualifiedCriteriaPanel } from '@/components/landing/S
 import { MonthlyLeadsSliderCard } from '@/components/landing/MonthlyLeadsSliderCard'
 import { WebsiteInLeadsOut } from '@/components/landing/WebsiteInLeadsOut'
 import { CommonQuestionsSection } from '@/components/landing/CommonQuestionsSection'
-import { CompareSectionStats } from '@/components/landing/CompareSectionStats'
 import { CompareTable } from '@/components/landing/CompareTable'
 import { ScrollReveal } from '@/components/landing/ScrollReveal'
 import { APP_GET_STARTED_URL } from '@/lib/appUrls'
@@ -119,10 +118,12 @@ export function LandingSections() {
         </div>
       </SectionShell>
 
+      <SectionBreak />
+
       {/* 654:3033 ×6 — background feature grid + illustrations */}
       <SectionShell id='how-it-works' labelledBy='heading-background'>
         <ScrollReveal delayMs={40}>
-          <div className='flex flex-col pt-20 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-20'>
+          <div className='flex flex-col pt-20 pb-12 md:pt-8 md:pb-8 lg:pt-8 lg:pb-8'>
             <div
               className='mb-5 inline-flex h-7 w-fit items-center gap-2 border border-white bg-[#030303] px-3 py-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]'
               style={{ borderWidth: '0.5px' }}
@@ -153,7 +154,7 @@ export function LandingSections() {
       <SectionBreak />
 
       <SectionShell id='pricing' labelledBy='heading-leads'>
-        <div className='flex flex-col pt-16 pb-16 md:pt-20 md:pb-20 lg:pt-24'>
+        <div className='flex flex-col pt-16 pb-16 md:pt-10 md:pb-10 lg:pt-10'>
           <ScrollReveal delayMs={40}>
             <div className='flex flex-col items-center'>
               {/* Figma 644:1833 — kicker above pricing headline */}
@@ -204,7 +205,7 @@ export function LandingSections() {
           <div
             className={cn(
               'mt-10 grid w-full grid-cols-1 items-start gap-8 md:mt-12 lg:mt-14',
-              'lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_340px] xl:gap-10',
+              'lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_340px] xl:gap-4',
             )}
           >
             <SuggestedMetrics
@@ -249,7 +250,6 @@ export function LandingSections() {
               <br />
               compare?
             </h2>
-            <CompareSectionStats className='mt-8  lg:mt-12' />
             <CompareTable className='mt-2' />
             <CompareStatStrip />
           </div>
@@ -261,7 +261,7 @@ export function LandingSections() {
         labelledBy='heading-common-questions'
       >
         <ScrollReveal delayMs={200}>
-          <div className='flex flex-col pb-24  md:pb-28 '>
+          <div className='flex flex-col pb-20  md:pb-20 '>
             <CommonQuestionsSection />
           </div>
         </ScrollReveal>

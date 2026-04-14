@@ -8,7 +8,7 @@ import { SiteNavbar } from '@/components/SiteNavbar'
 
 export const metadata: Metadata = {
   title: 'Pricing — InboundIQ',
-  description: 'Lead based pricing for AI-powered outbound.',
+  description: 'Simple, transparent pricing. Pay only for results.',
 }
 
 export default function PricingPage() {

@@ -9,11 +9,13 @@ export function PricingPageHeader() {
         >
           <span className='size-2 shrink-0 bg-white' aria-hidden />
           <p className='font-mono text-xs font-normal uppercase leading-[1.4] tracking-[-0.04em] text-white sm:text-[13px]'>
-            AI-POWERED OUTBOUND
+           Pay for Results
           </p>
         </div>
         <h1 className='max-w-[18ch] font-sans text-[clamp(2.5rem,8vw,4.5rem)] font-medium leading-none tracking-[-0.04em] text-white md:max-w-none md:text-[72px] md:tracking-[-2.88px]'>
-          Lead based Pricing
+          Simple. Transparent.
+          <br />
+          Pay Only for Results.
         </h1>
       </div>
     </header>

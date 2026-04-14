@@ -88,15 +88,9 @@ export function SiteNavbar() {
               className='bg-[color:var(--Neutral-300,#404040)] px-3 py-2 font-mono text-sm leading-[1.4] tracking-[-0.02em] text-white transition-opacity hover:opacity-90'
               style={{ fontFeatureSettings: "'ss05' 1" }}
             >
-              Get Started
+              Start For Free
             </Link>
-            <Link
-              href={APP_GET_STARTED_URL}
-              className='bg-white px-3 py-2 font-mono text-sm leading-[1.4] tracking-[-0.02em] text-black transition-opacity hover:opacity-90'
-              style={{ fontFeatureSettings: "'ss05' 1" }}
-            >
-              Get a Demo
-            </Link>
+          
           </div>
         </div>
 

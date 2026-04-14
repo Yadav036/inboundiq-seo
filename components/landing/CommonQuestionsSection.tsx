@@ -14,7 +14,10 @@ export function CommonQuestionsSection({
   showFaqBadge?: boolean
 }) {
   return (
-    <section className={cn('flex flex-col', className)} aria-labelledby={headingId}>
+    <section
+      className={cn('flex flex-col pt-8 md:pt-10 lg:pt-12', className)}
+      aria-labelledby={headingId}
+    >
       {showFaqBadge && (
         <div
           className='mx-auto inline-flex h-7 items-center gap-2 border border-white/70 bg-[#030303] px-3 py-1.5'

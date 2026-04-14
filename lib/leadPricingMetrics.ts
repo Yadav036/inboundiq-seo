@@ -87,7 +87,7 @@ export function computeLeadPricingMetrics(rawLeads: number): LeadPricingMetrics 
     ctaLabel = 'Launch my campaign'
   }
 
-  const costPerLead = Math.round(estimatedMonthlyCost / monthlyLeads)
+  const costPerLead = Math.floor(estimatedMonthlyCost / monthlyLeads)
   const projectedRevenue = monthlyLeads * AVG_REVENUE_PER_LEAD
   const roiMultiplier =
     estimatedMonthlyCost > 0 ? projectedRevenue / estimatedMonthlyCost : 0

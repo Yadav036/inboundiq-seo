@@ -93,7 +93,7 @@ export function HeroSection() {
               className='mt-3 font-mono text-[14px] font-normal leading-[1.4] tracking-[-0.02em] text-left text-white'
               style={{ fontFeatureSettings: "'ss05' 1" }}
             >
-              Try it - watch what happens
+              Try it for free - No credit card required
             </p>
           </div>
         </div>
