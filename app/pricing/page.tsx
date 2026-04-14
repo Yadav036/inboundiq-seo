@@ -44,7 +44,6 @@ export default function PricingPage() {
                 description='Ideal for scaling companies wanting predictable results'
                 price='$499'
                 period='/per month'
-                ctaLabel='Continue'
                 className='border-0'
               />
 

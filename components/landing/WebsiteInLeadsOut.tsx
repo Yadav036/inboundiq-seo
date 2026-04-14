@@ -32,7 +32,7 @@ function StepTabRow({
       onClick={onClick}
       className={cn(
         'flex w-full items-center gap-2 p-2 text-left font-mono text-sm font-normal leading-[1.4] tracking-[-0.02em]',
-        'transition-[border-color,background-color] duration-300 ease-out',
+        'transition-all duration-500 ease-out',
         active
           ? 'border border-[color:var(--Primary-500,#b7f601)] bg-[#111]'
           : 'border border-[#303030] bg-transparent',
@@ -52,7 +52,13 @@ function StepTabRow({
           {badge}
         </span>
       </div>
-      <p className='uppercase text-white' style={{ fontFeatureSettings: "'ss05' 1" }}>
+      <p
+        className={cn(
+          'uppercase transition-colors duration-500 ease-out',
+          active ? 'text-white' : 'text-[color:var(--Neutral-500,#a3a3a3)]',
+        )}
+        style={{ fontFeatureSettings: "'ss05' 1" }}
+      >
         {label}
       </p>
     </button>
@@ -64,21 +70,37 @@ export function WebsiteInLeadsOut() {
   const spacerRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
-    const observers = spacerRefs.current.map((spacer, i) => {
-      if (!spacer) return null
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveIndex(i)
-        },
-        {
-          threshold: 0,
-          rootMargin: `-${STICKY_TOP}px 0px -55% 0px`,
-        },
-      )
-      obs.observe(spacer)
-      return obs
-    })
-    return () => observers.forEach((obs) => obs?.disconnect())
+    let ticking = false
+
+    function syncActiveStep() {
+      const triggerY = STICKY_TOP + 20
+      let nextIndex = 0
+
+      spacerRefs.current.forEach((spacer, i) => {
+        if (!spacer) return
+        const top = spacer.getBoundingClientRect().top
+        if (top - triggerY <= 0) nextIndex = i
+      })
+
+      setActiveIndex((prev) => (prev === nextIndex ? prev : nextIndex))
+    }
+
+    function onScrollOrResize() {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        syncActiveStep()
+        ticking = false
+      })
+    }
+
+    syncActiveStep()
+    window.addEventListener('scroll', onScrollOrResize, { passive: true })
+    window.addEventListener('resize', onScrollOrResize)
+    return () => {
+      window.removeEventListener('scroll', onScrollOrResize)
+      window.removeEventListener('resize', onScrollOrResize)
+    }
   }, [])
 
   const scrollToSection = (i: number) => {

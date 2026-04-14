@@ -11,6 +11,8 @@ import { WebsiteInLeadsOut } from '@/components/landing/WebsiteInLeadsOut'
 import { CommonQuestionsSection } from '@/components/landing/CommonQuestionsSection'
 import { CompareTable } from '@/components/landing/CompareTable'
 import { ScrollReveal } from '@/components/landing/ScrollReveal'
+import { PricingCard } from '@/components/pricing/PricingCard'
+import { SeeYourFirstLeadsCta } from '@/components/pricing/SeeYourFirstLeadsCta'
 import { APP_GET_STARTED_URL } from '@/lib/appUrls'
 import { cn } from '@/lib/utils'
 
@@ -258,6 +260,67 @@ export function LandingSections() {
 
       <SectionBreak />
 
+      <SectionShell id='home-pricing-plans' labelledBy='heading-home-pricing-plans'>
+        <section
+          className='mx-auto w-full max-w-[1320px] px-0 pb-16 pt-8 md:pb-20 md:pt-10'
+          aria-labelledby='heading-home-pricing-plans'
+        >
+          <div className='mx-auto flex w-full max-w-[1320px] flex-col items-center gap-5 px-0 pb-10 pt-4 text-center sm:gap-6 sm:pb-4 sm:pt-4 md:pt-4'>
+            <div
+              className='inline-flex h-7 items-center gap-2 border border-white bg-[#030303] px-3 py-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]'
+              style={{ borderWidth: '0.5px' }}
+            >
+              <span className='size-2 shrink-0 bg-white' aria-hidden />
+              <p className='font-mono text-xs font-normal uppercase leading-[1.4] tracking-[-0.04em] text-white sm:text-[13px]'>
+                Pay for Results
+              </p>
+            </div>
+            <h2
+              id='heading-home-pricing-plans'
+              className='max-w-[18ch] font-sans text-[clamp(2.5rem,8vw,4.5rem)] font-medium leading-none tracking-[-0.04em] text-white md:max-w-none md:text-[72px] md:tracking-[-2.88px]'
+            >
+              Simple. Transparent.
+              <br />
+              Pay Only for Results.
+            </h2>
+          </div>
+          <div className='flex max-w-full justify-center overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
+            <div className='flex flex-col divide-y divide-[#303030] border border-[#303030] lg:flex-row lg:divide-x lg:divide-y-0'>
+              <PricingCard
+                title='Pay As You Go'
+                description='Perfect for testing or occasional lead generation'
+                price='$99'
+                period='/per qualified lead'
+                className='border-0'
+              />
+              <PricingCard
+                title='Starter'
+                description='Best for small teams starting outbound without risk'
+                price='$299'
+                period='/per month'
+                className='border-0'
+              />
+              <PricingCard
+                title='Growth'
+                description='Ideal for scaling companies wanting predictable results'
+                price='$499'
+                period='/per month'
+                className='border-0'
+              />
+              <PricingCard
+                title='Pro'
+                description='Built for aggressive growth and high-volume lead generation'
+                price='$999'
+                period='/per month'
+                className='border-0'
+              />
+            </div>
+          </div>
+        </section>
+      </SectionShell>
+
+      <SectionBreak />
+
       <SectionShell
         id='common-questions'
         labelledBy='heading-common-questions'
@@ -268,6 +331,8 @@ export function LandingSections() {
           </div>
         </ScrollReveal>
       </SectionShell>
+
+      <SeeYourFirstLeadsCta />
     </>
   )
 }

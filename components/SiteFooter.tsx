@@ -23,9 +23,9 @@ const FOOTER_COLUMNS: {
   },
 
   {
-    title: 'Company',
+    title: 'Legal',
     links: [
-      { label: 'Contact Us', href: APP_GET_STARTED_URL },
+
       { label: 'Privacy', href: APP_PRIVACY_URL },
       { label: 'Terms', href: APP_TERMS_URL },
     ],

@@ -2,7 +2,7 @@
 export function PricingPageHeader() {
   return (
     <header className='bg-[#030303]'>
-      <div className='mx-auto flex w-full max-w-[1320px] flex-col items-center gap-5 px-0 pb-10 pt-12 text-center sm:gap-6 sm:pb-12 sm:pt-16 md:pt-20'>
+      <div className='mx-auto flex w-full max-w-[1320px] flex-col items-center gap-5 px-0 pb-10 pt-4 text-center sm:gap-6 sm:pb-12 sm:pt-16 md:pt-20'>
         <div
           className='inline-flex h-7 items-center gap-2 border border-white bg-[#030303] px-3 py-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]'
           style={{ borderWidth: '0.5px' }}
